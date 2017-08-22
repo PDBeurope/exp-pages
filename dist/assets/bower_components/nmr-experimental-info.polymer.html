@@ -1,0 +1,146 @@
+<link rel="import" href="https://wwwdev.ebi.ac.uk/pdbe/widgets/pdb-polymer-components/bower_components/polymer/polymer.html">
+
+<dom-module id="nmr-experimental-info">
+    <template>
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/css/ebi-core.min.css">
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/bundle-pdbe-ui_head.min.css">
+
+    <div class="container_pdbe">
+
+        <template is="dom-if" if="{{double_check(data.nmr_experiments, data.nmr_spectrometer)}}">
+            No experimental information available
+        </template>
+
+        <template is="dom-if" if="{{check_experiments(data.nmr_experiments)}}">
+            <div class="grid_24 entry-content-left responsive_hide">
+                <h5>Samples and spectra</h5>
+                <div id="experiment_table_div">
+                    <div id="experiment_table_wrapper" class="dataTables_wrapper no-footer">
+                        <table id="experiment_table" class="dataTable no-footer" role="grid">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc" tabindex="0" aria-controls="experiment_table" rowspan="1" colspan="1" style="width:10%; " aria-sort="ascending" aria-label="Sample: activate to sort column ascending">Sample</th>
+                                    <th class="sorting" tabindex="0" aria-controls="experiment_table" rowspan="1" colspan="1" style="width: 40%; " aria-label="Contents: activate to sort column ascending">Contents</th>
+                                    <th class="sorting" tabindex="0" aria-controls="experiment_table" rowspan="1" colspan="1" style="width: 40%; " aria-label="Recorded spectra: activate to sort column ascending">Recorded spectra</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template is="dom-repeat" items="{{data.nmr_experiments}}">
+                                    <tr role="row" class="even">
+                                        <td>
+                                            {{ display_index(index) }}
+                                        </td>
+                                        <template is="dom-if" if="{{item.sample_contents}}">
+                                            <td>
+                                                {{item.sample_contents}}
+                                            </td>
+                                        </template>
+                                        <template is="dom-if" if="{{item.conditions_and_spectra}}">
+                                            <td>
+                                                <template is="dom-repeat" items="{{item.conditions_and_spectra}}">
+                                                        <template is="dom-repeat" items="{{item.spectrum_type}}">
+                                                            {{item}}
+                                                            <template is="dom-if" if="{{need_comma(index, item.spectrum_type.length)}}">, </template>
+                                                        </template>
+                                                </template>
+                                            </td>
+                                        </template>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template is="dom-if" if="{{check_spectrometers(data.nmr_spectrometer)}}">
+            <div class="grid_24">
+                <h5>NMR spectrometers used</h5>
+                <div class="grid_20">
+                    <template is="dom-repeat" items="{{data.nmr_spectrometer}}">
+                        <template is="dom-if" if="{{item.manufacturer}}">{{item.manufacturer}}</template>
+                        <template is="dom-if" if="{{item.model}}">{{item.model}}</template>
+                        <template is="dom-if" if="{{item.field_strength}}">{{item.field_strength}} MHz</template>
+                        <template is="dom-if" if="{{need_comma(index, data.nmr_spectrometer.length)}}">, </template>
+                    </template>
+                </div>
+            </div>
+        </template>
+
+
+    </div>
+    </template>
+
+    <script>
+    Polymer({
+
+        is: 'nmr-experimental-info',
+
+        properties: {
+        data: Object
+        },
+
+        display_index: function(index){
+            return index + 1;
+        },
+
+        check_spectrometers: function(spectrometer_list){
+            if(spectrometer_list){
+                if(spectrometer_list[0].manufacturer){
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        },
+
+        check_experiments: function(experiments){
+            if(experiments){
+                if(experiments.length > 0){
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        },
+
+        double_check: function(data1, data2){
+            if(!this.check_experiments(data1) && !this.check_spectrometers(data2)){
+                return true;
+            } else {
+                return false;
+            }
+        },
+
+        need_comma: function(index, length){
+        if(index < length-1){
+            return true;
+        } else {
+            return false;
+        }
+        }
+
+    });
+    </script>
+</dom-module>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

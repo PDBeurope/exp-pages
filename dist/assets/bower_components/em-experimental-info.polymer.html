@@ -1,0 +1,234 @@
+<link rel="import" href="https://wwwdev.ebi.ac.uk/pdbe/widgets/pdb-polymer-components/bower_components/polymer/polymer.html">
+
+<dom-module id="em-experimental-info">
+    <template>
+        <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/css/ebi-core.min.css">
+        <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/bundle-pdbe-ui_head.min.css">
+        <div class="container_pdbe">
+            <div class="grid_12 entry-content-left">
+                <template is="dom-if" if="{{buffer.name}}">
+                    <h5>Specimen preparation</h5>
+                    <div class="grid_24 pdbe-fact">
+                        <template is="dom-if" if="{{buffer.ph}}">
+                            <div class="grid_24">
+                                <span class="data-label reset_auto grid_8 alpha">
+                                    pH:
+                                </span>
+                                <span class="reset_auto grid_16">
+                                    {{buffer.ph}}
+                                </span>
+                            </div>
+                        </template>
+                        <template is="dom-if" if="{{buffer.name}}">
+                            <div class="grid_24">
+                                <span class="data-label reset_auto grid_8 alpha">
+                                    Buffer:
+                                </span>
+                                <span class="reset_auto grid_16">
+                                    {{buffer.name}}
+                                </span>
+                            </div>
+                        </template>
+                        <template is="dom-if" if="{{buffer.details}}">
+                            <div class="grid_24">
+                                <span class="data-label reset_auto grid_8 alpha">
+                                    Details:
+                                </span>
+                                <span class="reset_auto grid_16">
+                                    {{buffer.details}}
+                                </span>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+
+                <template is="dom-if" if="{{vitrification.cryo}}">
+                    <h5>Vitrification</h5>
+                    <div class="grid_24 pdbe-fact">
+                        <template is="dom-if" if="{{vitrification.cryo}}">
+                            <div class="grid_24">
+                                <span class="data-label reset_auto grid_8 alpha">
+                                    Cryogen:
+                                </span>
+                                <span class="reset_auto grid_16">
+                                    {{vitrification.cryo}}
+                                </span>
+                            </div>
+                        </template>
+                        <template is="dom-if" if="{{vitrification.temperature}}">
+                            <div class="grid_24">
+                                <span class="data-label reset_auto grid_8 alpha">
+                                    Temperature:
+                                </span>
+                                <span class="reset_auto grid_16">
+                                    {{vitrification.temperature}}
+                                </span>
+                            </div>
+                        </template>
+                        <template is="dom-if" if="{{vitrification.instrument}}">
+                            <div class="grid_24">
+                                <span class="data-label reset_auto grid_8 alpha">
+                                    Instrument:
+                                </span>
+                                <span class="reset_auto grid_16">
+                                    {{vitrification.instrument}}
+                                </span>
+                            </div>
+                        </template>
+                        <template is="dom-if" if="{{vitrification.humidity}}">
+                            <div class="grid_24">
+                                <span class="data-label reset_auto grid_8 alpha">
+                                    Humidity:
+                                </span>
+                                <span class="reset_auto grid_16">
+                                    {{vitrification.humidity}}
+                                </span>
+                            </div>
+                        </template>
+                            <template is="dom-if" if="{{vitrification.details}}">
+                            <div class="grid_24">
+                                <span class="data-label reset_auto grid_8 alpha">
+                                    Details:
+                                </span>
+                                <span class="reset_auto grid_16">
+                                    {{vitrification.details}}
+                                </span>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+            <div class="grid_12 entry-content-right">
+                <h5>Refinement statistics</h5>
+                <div class="grid_24 pdbe-fact">
+                    <template is="dom-if" if="{{data.experimental_method}}">
+                        <div class="grid_24">
+                            <span class="data-label reset_auto grid_13 alpha">
+                                Structure solution method:
+                            </span>
+                            <span class="reset_auto grid_11">
+                                {{data.experimental_method}}
+                            </span>
+                        </div>
+                    </template>
+                </div>
+                <div class="grid_24 pdbe-fact">
+                    <template is="dom-if" if="{{data.resolution}}">
+                        <div class="grid_24">
+                            <span class="data-label reset_auto grid_13 alpha">
+                                Resolution:
+                            </span>
+                            <span class="reset_auto grid_11">
+                                {{data.resolution}} &Aring;
+                            </span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+    Polymer({
+
+        is: 'em-experimental-info',
+
+        properties: {
+            data: Object,
+            buffer: {
+                type: Object,
+                computed: "createBuffer(data)"
+            },
+            vitrification: {
+                type: Object,
+                computed: "createVitrification(data)"
+            }
+        },
+
+        createBuffer: function(data){
+            ph_string = "";
+            name_string = "";
+            details_string = "";
+            if(data.specimen_preparation.buffer){
+                length = data.specimen_preparation.buffer.length;
+                for(i in data.specimen_preparation.buffer){
+                    if(data.specimen_preparation.buffer[i].ph){
+                        ph_string += data.specimen_preparation.buffer[i].ph;
+                        if(length > 1 && i < length - 1){
+                            ph_string += "; "
+                        }
+                    }
+                    if(data.specimen_preparation.buffer[i].name){
+                        buffer_string += data.specimen_preparation.buffer[i].name + "; ";
+                        if(length > 1 && i < length - 1){
+                            buffer_string += "; "
+                        }
+                    }
+                    if(data.specimen_preparation.buffer[i].details){
+                        details_string += data.specimen_preparation.buffer[i].details + "; ";
+                        if(length > 1 && i < length - 1){
+                            details_string += "; "
+                        }
+                    }
+                }
+            }
+            return {
+                "ph":ph_string,
+                "name":name_string,
+                "details": details_string
+            }
+        },
+
+        createVitrification: function(data){
+            cryogen_string = "";
+            temperature_string = "";
+            instrument_string = "";
+            humidity_string = "";
+            details_string = "";
+            if(data.specimen_preparation.vitrification){
+                length = data.specimen_preparation.vitrification.length;
+                for(i in data.specimen_preparation.vitrification){
+                    if(data.specimen_preparation.vitrification[i].cryogen){
+                        cryogen_string += data.specimen_preparation.vitrification[i].cryogen;
+                        if(length > 1 && i < length - 1){
+                            cryogen_string += "; "
+                        }
+                    }
+                    if(data.specimen_preparation.vitrification[i].temperature){
+                        temperature_string += data.specimen_preparation.vitrification[i].temperature;
+                        if(length > 1 && i < length - 1){
+                            temperature_string += "; "
+                        }
+                    }
+                    if(data.specimen_preparation.vitrification[i].instrument){
+                        instrument_string += data.specimen_preparation.vitrification[i].instrument;
+                        if(length > 1 && i < length - 1){
+                            instrument_string += "; "
+                        }
+                    }
+                    if(data.specimen_preparation.vitrification[i].humidity){
+                        humidity_string += data.specimen_preparation.vitrification[i].humidity;
+                        if(length > 1 && i < length - 1){
+                            humidity_string += "; "
+                        }
+                    }
+                    if(data.specimen_preparation.vitrification[i].details){
+                        details_string += data.specimen_preparation.vitrification[i].details;
+                        if(length > 1 && i < length - 1){
+                            details_string += "; "
+                        }
+                    }
+                }
+            }
+            return {
+                "cryo":cryogen_string, 
+                "temp":temperature_string, 
+                "instrument": instrument_string, 
+                "humidity":humidity_string,
+                "details":details_string
+            }
+        },   
+
+    });
+    </script>
+</dom-module>

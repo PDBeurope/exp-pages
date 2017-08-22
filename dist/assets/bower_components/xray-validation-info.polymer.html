@@ -1,0 +1,102 @@
+<link rel="import" href="https://wwwdev.ebi.ac.uk/pdbe/widgets/pdb-polymer-components/bower_components/polymer/polymer.html">
+
+<dom-module id="xray-validation-info">
+    <template>
+        <style>
+            :host {
+            display: block;
+            }
+        </style>
+
+        <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/css/ebi-core.min.css">
+        <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/bundle-pdbe-ui_head.min.css">
+        <div class="container_pdbe">
+            <div id="xray_key_validation_stats">
+                <div id="xray_key_validation_stats_tablediv_wrapper" class="dataTables_wrapper no-footer">
+                    <template is="dom-if" if="{{data}}">
+                        <table id="xray_key_validation_stats_tablediv" class="dataTable no-footer" role="grid">
+                            <thead>
+                                <tr role="row">
+                                <th class="sorting_asc" tabindex="0" aria-controls="xray_key_validation_stats_tablediv" rowspan="1" colspan="1" style="width: 50%; " aria-label="Metric: activate to sort
+                                    column ascending" aria-sort="ascending">Metric</th>
+                                <th class="sorting" tabindex="0" aria-controls="xray_key_validation_stats_tablediv" rowspan="1" colspan="1" style="width: 50%; " aria-label="Description: activate to sort
+                                    column ascending">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template is="dom-if" if="{{data.angles.percent_outliers}}">
+                                    <tr role="row">
+                                        <td class="sorting_1">Bond angles in protein, DNA, RNA molecules</td>
+                                        <td>{{data.angles.num_outliers}} outlier(s) of {{data.angles.num_checked}} ({{data.angles.percentage}}%)</td>
+                                    </tr>
+                                </template>
+
+                                <template is="dom-if" if="{{data.bonds.percent_outliers}}">
+                                    <tr role="row">
+                                        <td class="sorting_1">Bond lengths in protein, DNA, RNA molecules</td>
+                                        <td>{{data.bonds.num_outliers}} outlier(s) of {{data.bonds.num_checked}} ({{data.bonds.percentage}}%)</td>
+                                    </tr>
+                                </template>
+
+                                <template is="dom-if" if="{{data.RSRZ.percent_outliers}}">
+                                    <tr role="row">
+                                        <td class="sorting_1">Electron density fit in protein, DNA, RNA molecules</td>
+                                        <td>{{data.RSRZ.num_outliers}} outlier(s) of {{data.RSRZ.num_checked}} ({{data.RSRZ.percentage}}%)</td>
+                                    </tr>
+                                </template>
+
+                                <template is="dom-if" if="{{data.protein_ramachandran.num_outliers}}">
+                                    <tr role="row">
+                                        <td class="sorting_1">Ramachandran outliers in protein molecules</td>
+                                        <td>{{data.protein_ramachandran.num_outliers}} outlier(s) of {{data.protein_ramachandran.num_checked}} ({{data.protein_ramachandran.percentage}}%)</td>
+                                    </tr>
+                                </template>
+
+                                <template is="dom-if" if="{{data.protein_sidechains.percent_outliers}}">
+                                    <tr role="row">
+                                        <td class="sorting_1">Sidechain rotamer outliers in protein molecules</td>
+                                        <td>{{data.protein_sidechains.num_outliers}} outlier(s) of {{data.protein_sidechains.num_checked}} ({{data.protein_sidechains.percentage}}%)</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </template>
+
+                    <template is="dom-if" if="{{!data}}">
+                        <table id="xray_key_validation_stats_tablediv" class="dataTable no-footer" role="grid">
+                            <thead>
+                                <tr role="row">
+                                <th class="sorting_asc" tabindex="0" aria-controls="xray_key_validation_stats_tablediv" rowspan="1" colspan="1" style="width: 50%; " aria-label="Metric: activate to sort
+                                    column ascending" aria-sort="ascending">Metric</th>
+                                <th class="sorting" tabindex="0" aria-controls="xray_key_validation_stats_tablediv" rowspan="1" colspan="1" style="width: 50%; " aria-label="Description: activate to sort
+                                    column ascending">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1" colspan="2">No validation information available</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </template>
+                </div>  
+            </div>
+        </div>
+    </template>
+
+    <script>
+    Polymer({
+
+        is: 'xray-validation-info',
+
+        properties: {
+            data: Object
+            },
+
+    });
+    </script>
+</dom-module>
+
+
+
+    

@@ -1,0 +1,80 @@
+<link rel="import" href="https://wwwdev.ebi.ac.uk/pdbe/widgets/pdb-polymer-components/bower_components/polymer/polymer.html">
+
+<dom-module id="em-validation-info">
+    <template>
+        <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/css/ebi-core.min.css">
+        <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/bundle-pdbe-ui_head.min.css">
+        <div class="container_pdbe">
+            <div id="xray_key_validation_stats">
+                <div id="xray_key_validation_stats_tablediv_wrapper" class="dataTables_wrapper no-footer">
+                    <template is="dom-if" if="{{hasData}}">
+                    <table id="xray_key_validation_stats_tablediv" class="dataTable no-footer" role="grid">
+                        <thead>
+                        <tr role="row">
+                            <th class="sorting_asc" tabindex="0" aria-controls="xray_key_validation_stats_tablediv" rowspan="1" colspan="1" style="width: 50%; " aria-label="Metric: activate to sort
+                                column ascending" aria-sort="ascending">Metric</th>
+                            <th class="sorting" tabindex="0" aria-controls="xray_key_validation_stats_tablediv" rowspan="1" colspan="1" style="width: 50%; " aria-label="Description: activate to sort
+                                column ascending">Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <template is="dom-if" if="{{data.angles.percent_outliers}}">
+                                <tr role="row">
+                                    <td class="sorting_1">Bond angles in protein, DNA, RNA molecules</td>
+                                    <td>{{data.angles.num_outliers}} outliers of {{data.angles.num_checked}} ({{data.angles.percent_outliers}}%)</td>
+                                </tr>
+                            </template>
+                            <template is="dom-if" if="{{data.bonds.percent_outliers}}">
+                                <tr role="row">
+                                    <td class="sorting_1">Bond lengths in protein, DNA, RNA molecules</td>
+                                    <td>{{data.bonds.num_outliers}} outliers of {{data.bonds.num_checked}} ({{data.bonds.percent_outliers}}%)</td>
+                                </tr>
+                            </template>
+                            <template is="dom-if" if="{{data.protein_ramachandran.percent_outliers}}">
+                                <tr role="row">
+                                    <td class="sorting_1">Ramachandran outliers in protein molecules</td>
+                                    <td>{{data.protein_ramachandran.num_outliers}} outliers of {{data.protein_ramachandran.num_checked}} ({{data.protein_ramachandran.percent_outliers}}%)</td>
+                                </tr>
+                            </template>
+                            <template is="dom-if" if="{{data.protein_sidechains.percent_outliers}}">
+                                <tr role="row">
+                                    <td class="sorting_1">Sidechain rotamer outliers in protein molecules</td>
+                                    <td>{{data.protein_sidechains.num_outliers}} outliers of {{data.protein_sidechains.num_checked}} ({{data.protein_sidechains.percent_outliers}}%)</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+    Polymer({
+
+        is: 'em-validation-info',
+
+        properties: {
+            data: Object,
+            hasData: {
+                type: Boolean,
+                computed: "checkData(data)"
+            }
+        },
+        
+        checkData: function(val){
+            if(val){
+                return true
+            } else {
+                return false
+            }
+        }
+
+    });
+    </script>
+</dom-module>
+
+
+
+    

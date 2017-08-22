@@ -1,0 +1,134 @@
+<div id="intro" class="grid_24" style="margin-bottom: 10px;">
+    <div class="pdbe-intro-heading grid_24">
+        <div class="pdbe-intro-title grid_24 reset_100">
+            <h3 *ngFor="let entry of expData | keysPipe">
+                <span *ngFor="let experiment of entry.value; let i = index">
+                    {{experiment.experimental_method}}<span *ngIf="i < entry.value.length - 1">,</span>
+                </span>
+            </h3>
+        </div>
+    </div>
+    <div *ngFor="let entry of expData | keysPipe">
+        <div *ngIf="apiNmrResData">
+            <div *ngFor="let res_entry of apiNmrResData | keysPipe">
+                <summary-box [entryid] = "entryid" [data]="entry.value" [molecules]="moleculeData | keysPipe" [resources]="res_entry.value"></summary-box>
+            </div>
+        </div>
+        <div *ngIf="!apiNmrResData">
+            <summary-box [entryid] = "entryid" [data]="entry.value" [molecules]="moleculeData | keysPipe"></summary-box>
+        </div>
+    </div>
+</div>
+
+<div class="entry-content">
+    <ul class="nav nav-tabs" role="tablist" *ngFor="let entry of expData | keysPipe">
+        <li *ngFor="let experiment of entry.value; let i = index" (click)="setExpType(experiment.experimental_method_class)" role="presentation" [ngClass]="{'active': currentExpType == experiment.experimental_method_class }">
+            <a href="" aria-controls="entry" role="tab" data-toggle="tab">
+                <h4>{{experiment.experimental_method}}</h4>
+            </a>
+        </li>
+    </ul>
+
+    <div class="entry-content-left grid_24">
+        <section class="grid_24 pdbe-topic">
+            <h4 id="sample_info" class="slideToggle icon icon-functional" data-icon="8">Sample information</h4>
+            <div class="pdbe-topic-content">
+                <div *ngFor="let entry of summaryData | keysPipe">
+                    <sample-info [data]="entry.value" [molecules]="moleculeData | keysPipe"></sample-info>
+                </div>
+            </div>
+        </section>
+        <section class="grid_24 pdbe-topic">
+            <h4 class="slideToggle icon icon-functional" data-icon="8">Validation information</h4>
+            <div class="pdbe-topic-content">
+                <div *ngFor="let entry of expData | keysPipe">
+                    <div *ngFor="let experiment of entry.value">
+
+                        <div *ngIf="currentExpType == 'nmr' && experiment.experimental_method_class == 'nmr'">
+                            <div *ngFor="let res_entry of apiNmrResData | keysPipe">
+                                <nmr-validation-info [data]="experiment" [resources]="res_entry.value"></nmr-validation-info>
+                            </div>
+                        </div>
+                        <div *ngIf="currentExpType == 'x-ray' && experiment.experimental_method_class == 'x-ray'">
+                            <div *ngIf="xrayValidationData">
+                                <div *ngFor="let val_entry of xrayValidationData | keysPipe">
+                                    <xray-validation-info [data]="val_entry.value"></xray-validation-info>
+                                </div>
+                            </div>
+                            <div *ngIf="!xrayValidationData">
+                                No validation information available
+                            </div>
+                        </div>
+                        <div *ngIf="currentExpType == 'em' && experiment.experimental_method_class == 'em'">
+                            <div *ngIf="xrayValidationData">
+                                <div *ngFor="let val_entry of xrayValidationData | keysPipe">
+                                    <em-validation-info [data]="val_entry.value"></em-validation-info>
+                                </div>
+                            </div>
+                            <div *ngIf="!xrayValidationData">
+                                No validation information available
+                            </div>
+                        </div>
+                        <!-- TODO -->
+                        <!-- "OTHER" NEEDS TO CHANGE TO "SAS" -->
+                        <div *ngIf="currentExpType == 'sas' && experiment.experimental_method_class == 'sas'">
+                            <div *ngIf="sasValidationData">
+                                <sas-validation-info [data]="sasValidationData"></sas-validation-info>
+                            </div>
+                            <div *ngIf="!sasValidationData">
+                                No validation information available
+                            </div>
+                        </div>
+                        <div *ngIf="currentExpType == 'other' && experiment.experimental_method_class == 'other'">
+                            No validation information available
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid_24 pdbe-topic">
+            <h4 class="slideToggle icon icon-functional" data-icon="8">Experimental information</h4>
+            <div class="pdbe-topic-content">
+                <div *ngFor="let entry of expData | keysPipe">
+                    <div *ngFor="let experiment of entry.value">
+                        <!-- EXPERIMENTAL INFO -->
+                        <div *ngIf="currentExpType == 'nmr' && experiment.experimental_method_class == 'nmr'">
+                            <nmr-experimental-info [data]="experiment"></nmr-experimental-info>
+                        </div>
+                        <div *ngIf="currentExpType == 'x-ray' && experiment.experimental_method_class == 'x-ray'">
+                            <div *ngIf="xrayRefinedData">
+                                <div *ngFor="let ref_entry of xrayRefinedData | keysPipe">
+                                    <xray-experimental-info [data]="formattedXrayExp" [refdata]="ref_entry.value"></xray-experimental-info>
+                                </div>
+                            </div>
+                            <div *ngIf="!xrayRefinedData && formattedXrayExp">
+                                <xray-experimental-info [data]="formattedXrayExp"></xray-experimental-info>
+                            </div>
+                            <div *ngIf="!xrayRefinedData && !formattedXrayExp">
+                                No experimental information available
+                            </div>
+                        </div>
+                        <div *ngIf="currentExpType == 'em' && experiment.experimental_method_class == 'em'">
+                            <em-experimental-info [data]="experiment"></em-experimental-info>
+                        </div>
+                        <!-- TODO -->
+                        <!-- THIS IS NOT FINAL -->
+                        <!-- "OTHER" NEEDS TO CHANGE TO "SAS" -->
+                        <div *ngIf="currentExpType == 'sas' && experiment.experimental_method_class == 'sas'">
+                            <div *ngIf="sasExperimentalData">
+                                <sas-experimental-info [data]="sasExperimentalData"></sas-experimental-info>
+                            </div>
+                            <div *ngIf="!sasExperimentalData">
+                                No experimental information available
+                            </div>
+                        </div>
+                        <div *ngIf="currentExpType == 'other' && experiment.experimental_method_class == 'other'">
+                            No experimental information available
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

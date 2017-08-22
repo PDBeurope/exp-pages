@@ -1,0 +1,247 @@
+<link rel="import" href="https://wwwdev.ebi.ac.uk/pdbe/widgets/pdb-polymer-components/bower_components/polymer/polymer.html">
+
+<dom-module id="summary-box">
+  <template>
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/css/ebi-core.min.css">
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/bundle-pdbe-ui_head.min.css">
+    <div class="container_pdbe">
+        <div class="pdbe-intro-relevant grid_13 omega reset_100">
+            <div class="grid_24 pdbe-fact">
+                <template is="dom-if" if="{{multipleValues(source.org)}}">
+                    <strong>Source organisms:</strong>
+                    <ul style="margin-bottom: 9px;">
+                        <template is="dom-repeat" items="{{source.org}}">
+                            <li>
+                                <a class='srch-2' href='/pdbe/entry/search/index?organism_scientific_name:${java.net.URLEncoder.encode("{{item}}")}'>
+                                    <i>{{item}}</i>
+                                </a>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+                <template is="dom-if" if="{{!multipleValues(source.org)}}">
+                    <strong>Source organism:</strong>
+                    <template is="dom-repeat" items="{{source.org}}">
+                        <a class='srch-2' href='/pdbe/entry/search/index?organism_scientific_name:${java.net.URLEncoder.encode("{{item}}")}'>
+                            <i>{{item}}</i>
+                        </a>
+                    </template>
+                </template>
+            </div>
+            <div class="grid_24 pdbe-fact">
+                <template is="dom-if" if="{{experiments.resolution}}">
+                    <span class="data-label grid_12 alpha omega">Resolution:</span>
+                    <span class="grid_12">{{experiments.resolution}}&Aring;</span>
+                </template>
+
+                <template is="dom-if" if="{{experiments.refinement_method}}">
+                    <span class="data-label grid_12 alpha omega">Refinement method:</span>
+                    <span class="grid_12">{{experiments.refinement_method}}</span>
+                </template>
+
+                <template is="dom-if" if="{{experiments.number_of_deposited_models}}">
+                    <span class="data-label grid_12 alpha omega">Number of deposited models:</span>
+                    <span class="grid_12">{{experiments.number_of_deposited_models}} model<template is="dom-if" if="{{higherThanOne(experiments.number_of_deposited_models)}}">s</template></span>
+                </template>
+
+                <template is="dom-if" if="{{experiments.backbone_rmsd_for_largest_domain}}">
+                    <span class="data-label grid_12 alpha omega">Backbone RMSD for the largest domain:</span>
+                    <span class="grid_12">{{formatNumber(experiments.backbone_rmsd_for_largest_domain, 1)}} &Aring;</span>   
+                </template>   
+
+                <template is="dom-if" if="{{resources}}">
+                    <template is="dom-if" if="{{resources.nrg_link || resources.uniquely_linked_bmrb_entries}}">
+                        <template is="dom-if" if="{{checkLength(resources.uniquely_linked_bmrb_entries)}}">
+                            <div class="grid_24 pdbe-domain-validation pdbe-fact">
+                                <span class="data-label grid_12 alpha omega">Chemical shifts:</span>
+                                <span class="structure-analysis-architecture grid_8 reset_100">
+                                    <template is="dom-repeat" items="{{resources.uniquely_linked_bmrb_entries}}">
+                                        <a class="ext active" target="_blank" href="{{item.bmrb_link}}">BMR{{item.bmrb_id}}</a>&nbsp;
+                                    </template>
+                                </span>
+                            </div>
+                        </template>
+                    </template>
+                </template>
+
+                <template is="dom-if" if="{{experiments.completeness_of_chemical_shift_assignment}}">
+                    <span class="data-label grid_12 alpha omega">Chemical shift assignment:</span>
+                    <span class="grid_12">{{floorNumber(experiments.completeness_of_chemical_shift_assignment)}}%</span>
+                </template>
+
+                <template is="dom-if" if="{{experiments.show_r}}">
+                    <div class='data-label alpha'>Reported R values:</div>
+                    <div class='grid_24'>
+                        <span class='grid_6'>R</span>
+                        <span class='grid_6'>R<sub>work</sub></span>
+                        <span class='grid_6'>R<sub>free</sub></span>
+                    </div>
+                    <div class='grid_24'>
+                        <span class='grid_6'>
+                            <template is="dom-if" if="{{experiments.r_factor}}">
+                                {{formatNumber(experiments.r_factor, 2)}}
+                            </template>
+                            <template is="dom-if" if="{{!experiments.r_factor}}">
+                                Not available
+                            </template>
+                        </span>
+                        <span class='grid_6'>
+                            <template is="dom-if" if="{{experiments.r_free}}">
+                                {{formatNumber(experiments.r_free, 2)}}
+                            </template>
+                            <template is="dom-if" if="{{!experiments.r_free}}">
+                                Not available
+                            </template>
+                        </span>
+                        <span class='grid_6'>
+                            <template is="dom-if" if="{{experiments.r_work}}">
+                                {{formatNumber(experiments.r_work, 2)}}
+                            </template>
+                            <template is="dom-if" if="{{!experiments.r_work}}">
+                                Not available
+                            </template>
+                        </span>
+                    </div>
+                </template>
+            </div>
+        </div>
+        <div class="pdbe-intro-image grid_10 alpha omega reset_100">
+            <div class="pdbe-intro-image-wrapper reset_66 grid_24">
+                <div style="margin: 1px; background-color: #fff;padding:10px;border: 1px solid black">
+                <img class="experiment-validation-sliders" src="https://www.ebi.ac.uk/pdbe/entry-files/{{entryid}}_multipercentile_validation.png"
+                    onerror="this.parentElement.innerHTML = 'wwPDB Validation report is not available for this entry.'"
+                    alt="Entry percentile scores">
+                </div>
+            </div>
+        </div>
+    </div>
+  </template>
+
+    <script>
+        Polymer({
+
+            is: 'summary-box',
+
+            properties: {
+                data: Object,
+                entryid: String,
+                resources: Object,
+                molecules: {
+                    type: Object,
+                },
+                source: {
+                    type: Object,
+                    computed: 'processOrgData(molecules)',
+                },
+                experiments: {
+                    type: Object,
+                    computed: 'createExpData(data)',
+                },
+            },
+
+            processOrgData: function(molecules){
+                if(molecules.length > 0){
+                    molecules = this.molecules[0].value;
+                    unique_orgs = [];
+                    for(i in molecules){
+                        if(molecules[i].source){
+                            current_org = molecules[i].source[0].organism_scientific_name;
+                            if(current_org){
+                                if(unique_orgs.indexOf(current_org) < 0){
+                                    unique_orgs.push(current_org);
+                                }
+                            }                       
+                        }
+                    }  
+                    return {"org": unique_orgs};                  
+                }
+            },
+
+            createExpData: function(experiments){
+                createdData = {};
+                show_r = false;
+                if(experiments){
+                    for(i in experiments){
+                        resolution = experiments[i].resolution;
+                        completeness_of_chemical_shift_assignment = experiments[i].completeness_of_chemical_shift_assignment;
+                        r_factor = experiments[i].r_factor;
+                        r_free = experiments[i].r_free;
+                        r_work = experiments[i].r_work;
+                        if(resolution){
+                            if (!createdData["resolution"]) {
+                                createdData["resolution"] = resolution;
+                            } else if (resolution < createdData["resolution"]){
+                                createdData["resolution"] = resolution;
+                            }
+                        }
+                        if(r_factor){
+                            createdData["r_factor"] = r_factor;
+                            show_r = true;
+                        }
+                        if(r_free){
+                            createdData["r_free"] = r_free;
+                            show_r = true;
+                        }
+                        if(r_work){
+                            createdData["r_work"] = r_work;
+                            show_r = true;
+                        }
+                        if(completeness_of_chemical_shift_assignment){
+                            createdData["completeness_of_chemical_shift_assignment"] = completeness_of_chemical_shift_assignment;
+                        }
+                        if(experiments[i].nmr_ensemble_refinement){
+                            refinement_method = experiments[i].nmr_ensemble_refinement.refinement_method;
+                            backbone_rmsd_for_largest_domain = experiments[i].nmr_ensemble_refinement.backbone_rmsd_for_largest_domain;
+                            number_of_deposited_models = experiments[i].nmr_ensemble_refinement.number_of_deposited_models;
+                            if(refinement_method){
+                                createdData["refinement_method"] = refinement_method;
+                            }
+                            if(backbone_rmsd_for_largest_domain){
+                                createdData["backbone_rmsd_for_largest_domain"] = backbone_rmsd_for_largest_domain;
+                            }
+                            if(number_of_deposited_models){
+                                createdData["number_of_deposited_models"] = number_of_deposited_models;
+                            }
+                        }
+                    }
+                }
+                createdData["show_r"] = show_r;
+                return createdData;
+            },
+
+            multipleValues: function(val){
+                if(val.length > 1){
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+
+            higherThanOne: function(data){
+                if(data > 1){
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+
+            checkLength: function(array){
+                if(array.length > 0){
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+
+            floorNumber: function(value){
+                return Math.floor(value);
+            },
+
+            formatNumber: function(value, dec){
+                num = Math.pow(10, dec);
+                return Math.floor(value * num)/num;
+            },
+
+        });
+    </script>
+</dom-module>

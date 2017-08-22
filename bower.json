@@ -1,0 +1,17 @@
+{
+  "name": "exp-page-components",
+  "authors": [
+    "Mihaly Varadi <mvaradi@ebi.ac.uk>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
