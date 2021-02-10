@@ -114,18 +114,6 @@ export class AppComponent implements OnInit {
         this.dataService.getApiData(this.entryId + '.json', this.sasExpApiUrl).then(data => this.sasExperimentalData = data);
     }
 
-    clicked(val): void {
-        if (val === 'validation') {
-            this.valIcon = this.changeIcon(this.valIcon);
-            this.valDisplay = this.changeDisplay(this.valIcon);
-        } else if (val === 'sample') {
-            this.samIcon = this.changeIcon(this.samIcon);
-            this.samDisplay = this.changeDisplay(this.samIcon);
-        } else if (val === 'experiment') {
-            this.expIcon = this.changeIcon(this.expIcon);
-            this.expDisplay = this.changeDisplay(this.expIcon);
-        }
-    }
 
     changeIcon(val): string {
         if (val === '8') {
