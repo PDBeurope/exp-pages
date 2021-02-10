@@ -7,14 +7,13 @@ import {PdbService} from './app.service';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    styles: []
 })
 
 export class AppComponent implements OnInit {
 
     entryId: string;
     currentExpType: string;
-
     baseUrl: string;
     pdbeExpApiUrl: string;
     moleculeApiUrl: string;
@@ -25,7 +24,6 @@ export class AppComponent implements OnInit {
     sasBaseUrl: string;
     sasValApiUrl: string;
     sasExpApiUrl: string;
-
     expData: any;
     moleculeData: any;
     summaryData: any;
@@ -35,14 +33,11 @@ export class AppComponent implements OnInit {
     formattedXrayExp: any;
     sasValidationData: any;
     sasExperimentalData: any;
-
     sourceOrganisms: Array<string>;
     expressionSystems: Array<string>;
-
     samIcon: string;
     valIcon: string;
     expIcon: string;
-
     samDisplay: string;
     valDisplay: string;
     expDisplay: string;
@@ -136,10 +131,9 @@ export class AppComponent implements OnInit {
     }
 
     checkExpTypes(apiData): void {
-        for (let entry in apiData) {
             let first = true;
-            for (let exp in apiData[entry]) {
-                let expType = apiData[entry][exp]['experimental_method_class'];
+            for (let i = 0; i < apiData[this.entryId].length; i++) {
+                const expType = apiData[this.entryId][i]['experimental_method_class'];
                 if (first) {
                     this.currentExpType = expType;
                     first = false;
@@ -156,7 +150,6 @@ export class AppComponent implements OnInit {
                     this.getSasExpData();
                 }
             }
-        }
     }
 
     ngOnInit(): void {
