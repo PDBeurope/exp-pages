@@ -12,7 +12,7 @@ import {PdbService} from './app.service';
 
 export class AppComponent implements OnInit {
 
-    entryid: string;
+    entryId: string;
     currentExpType: string;
 
     baseUrl: string;
@@ -52,15 +52,15 @@ export class AppComponent implements OnInit {
         this.sasBaseUrl = 'https://www.sasbdb.org/rest-api/entry/';
         this.sasValApiUrl = this.sasBaseUrl + 'validation/';
         this.sasExpApiUrl = this.sasBaseUrl + 'experiment/';
-        this.entryid = elm.nativeElement.getAttribute('entryid');
+        this.entryId = elm.nativeElement.getAttribute('entryId');
         this.pdbeExpApiUrl = this.baseUrl + '/pdbe/api/pdb/entry/experiment/';
         this.moleculeApiUrl = this.baseUrl + '/pdbe/api/pdb/entry/molecules/';
         this.summaryApiUrl = this.baseUrl + '/pdbe/api/pdb/entry/summary/';
         this.nmrResApiUrl = this.baseUrl + '/pdbe/api/pdb/entry/nmr_resources/';
         this.xrayValApiUrl = this.baseUrl + '/pdbe/api/validation/key_validation_stats/entry/';
         this.xrayRefApiUrl = this.baseUrl + '/pdbe/api/validation/xray_refine_data_stats/entry/';
-        this.sourceOrganisms = new Array<string>();
-        this.expressionSystems = new Array<string>();
+        this.sourceOrganisms = [];
+        this.expressionSystems = [];
         this.formattedXrayExp = {};
         this.valIcon = '8';
         this.expIcon = '8';
@@ -75,62 +75,62 @@ export class AppComponent implements OnInit {
     }
 
     getExpData(): void {
-        this.dataService.getApiData(this.entryid, this.pdbeExpApiUrl)
+        this.dataService.getApiData(this.entryId, this.pdbeExpApiUrl)
             .then(data => this.expData = data)
             .then(() => this.checkExpTypes(this.expData))
             .then(() => this.createFormattedExpData(this.expData));
     }
 
     getSummaryData(): void {
-        this.dataService.getApiData(this.entryid, this.summaryApiUrl)
+        this.dataService.getApiData(this.entryId, this.summaryApiUrl)
             .then(data => this.summaryData = data);
     }
 
     getMoleculeData(): void {
-        this.dataService.getApiData(this.entryid, this.moleculeApiUrl)
+        this.dataService.getApiData(this.entryId, this.moleculeApiUrl)
             .then(data => this.moleculeData = data)
     }
 
     getNmrResData(): void {
-        this.dataService.getApiData(this.entryid, this.nmrResApiUrl)
+        this.dataService.getApiData(this.entryId, this.nmrResApiUrl)
             .then(data => this.apiNmrResData = data);
     }
 
     getXrayValData(): void {
-        this.dataService.getApiData(this.entryid, this.xrayValApiUrl)
+        this.dataService.getApiData(this.entryId, this.xrayValApiUrl)
             .then(data => this.xrayValidationData = data);
     }
 
     getXrayRefData(): void {
-        this.dataService.getApiData(this.entryid, this.xrayRefApiUrl)
+        this.dataService.getApiData(this.entryId, this.xrayRefApiUrl)
             .then(data => this.xrayRefinedData = data);
     }
 
     getSasValData(): void {
-        this.dataService.getApiData(this.entryid + '.json', this.sasValApiUrl).then(data => this.sasValidationData = data);
+        this.dataService.getApiData(this.entryId + '.json', this.sasValApiUrl).then(data => this.sasValidationData = data);
     }
 
     getSasExpData(): void {
-        this.dataService.getApiData(this.entryid + '.json', this.sasExpApiUrl).then(data => this.sasExperimentalData = data);
+        this.dataService.getApiData(this.entryId + '.json', this.sasExpApiUrl).then(data => this.sasExperimentalData = data);
     }
 
     clicked(val): void {
-        if (val == 'validation') {
+        if (val === 'validation') {
             this.valIcon = this.changeIcon(this.valIcon);
             this.valDisplay = this.changeDisplay(this.valIcon);
-        } else if (val == 'sample') {
+        } else if (val === 'sample') {
             this.samIcon = this.changeIcon(this.samIcon);
             this.samDisplay = this.changeDisplay(this.samIcon);
-        } else if (val == 'experiment') {
+        } else if (val === 'experiment') {
             this.expIcon = this.changeIcon(this.expIcon);
             this.expDisplay = this.changeDisplay(this.expIcon);
         }
     }
 
     changeIcon(val): string {
-        if (val == '8') {
+        if (val === '8') {
             return '9';
-        } else if (val == '9') {
+        } else if (val === '9') {
             return '8';
         } else {
             return '9';
@@ -138,9 +138,9 @@ export class AppComponent implements OnInit {
     }
 
     changeDisplay(val): string {
-        if (val == 8) {
+        if (val === 8) {
             return 'block';
-        } else if (val == 9) {
+        } else if (val === 9) {
             return 'none';
         } else {
             return 'none';
@@ -150,7 +150,7 @@ export class AppComponent implements OnInit {
     createFormattedExpData(apiData): void {
         for (let entry in apiData) {
             for (let exp in apiData[entry]) {
-                if (apiData[entry][exp].experimental_method_class == 'x-ray') {
+                if (apiData[entry][exp].experimental_method_class === 'x-ray') {
                     this.formattedXrayExp['a'] = apiData[entry][exp].cell.a;
                     this.formattedXrayExp['b'] = apiData[entry][exp].cell.b;
                     this.formattedXrayExp['c'] = apiData[entry][exp].cell.c;
@@ -179,14 +179,14 @@ export class AppComponent implements OnInit {
                     this.currentExpType = expType;
                     first = false;
                 }
-                if (expType == 'nmr') {
+                if (expType === 'nmr') {
                     this.getNmrResData();
-                } else if (expType == 'x-ray') {
+                } else if (expType === 'x-ray') {
                     this.getXrayValData();
                     this.getXrayRefData();
-                } else if (expType == 'em') {
+                } else if (expType === 'em') {
                     this.getXrayValData();
-                } else if (expType == 'sas') {
+                } else if (expType === 'sas') {
                     this.getSasValData();
                     this.getSasExpData();
                 }
@@ -199,5 +199,4 @@ export class AppComponent implements OnInit {
         this.getMoleculeData();
         this.getExpData();
     }
-
 }
