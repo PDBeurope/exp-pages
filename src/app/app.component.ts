@@ -148,22 +148,20 @@ export class AppComponent implements OnInit {
     }
 
     createFormattedExpData(apiData): void {
-        for (let entry in apiData) {
-            for (let exp in apiData[entry]) {
-                if (apiData[entry][exp].experimental_method_class === 'x-ray') {
-                    this.formattedXrayExp['a'] = apiData[entry][exp].cell.a;
-                    this.formattedXrayExp['b'] = apiData[entry][exp].cell.b;
-                    this.formattedXrayExp['c'] = apiData[entry][exp].cell.c;
-                    this.formattedXrayExp['alpha'] = apiData[entry][exp].cell.alpha;
-                    this.formattedXrayExp['beta'] = apiData[entry][exp].cell.beta;
-                    this.formattedXrayExp['gamma'] = apiData[entry][exp].cell.gamma;
-                    this.formattedXrayExp['spacegroup'] = apiData[entry][exp].spacegroup;
-                    for (let diffrn in apiData[entry][exp].diffraction_experiment) {
-                        if (!this.formattedXrayExp['beam_info']) {
-                            this.formattedXrayExp['beam_info'] = apiData[entry][exp].diffraction_experiment[diffrn].beam_source_type;
-                        } else {
-                            this.formattedXrayExp['beam_info'] += ', ' + apiData[entry][exp].diffraction_experiment[diffrn].beam_source_type;
-                        }
+        for (let i = 0; i < apiData[this.entryId].length; i++) {
+            if (apiData[this.entryId][i].experimental_method_class === 'x-ray') {
+                this.formattedXrayExp['a'] = apiData[this.entryId][i].cell.a;
+                this.formattedXrayExp['b'] = apiData[this.entryId][i].cell.b;
+                this.formattedXrayExp['c'] = apiData[this.entryId][i].cell.c;
+                this.formattedXrayExp['alpha'] = apiData[this.entryId][i].cell.alpha;
+                this.formattedXrayExp['beta'] = apiData[this.entryId][i].cell.beta;
+                this.formattedXrayExp['gamma'] = apiData[this.entryId][i].cell.gamma;
+                this.formattedXrayExp['spacegroup'] = apiData[this.entryId][i].spacegroup;
+                for (let j = 0; j < apiData[this.entryId][i].diffraction_experiment.length; j++) {
+                    if (!this.formattedXrayExp['beam_info']) {
+                        this.formattedXrayExp['beam_info'] = apiData[this.entryId][i].diffraction_experiment[j].beam_source_type;
+                    } else {
+                        this.formattedXrayExp['beam_info'] += ', ' + apiData[this.entryId][i].diffraction_experiment[j].beam_source_type;
                     }
                 }
             }
