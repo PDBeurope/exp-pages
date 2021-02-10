@@ -11,11 +11,11 @@
     <div *ngFor="let entry of expData | keysPipe">
         <div *ngIf="apiNmrResData">
             <div *ngFor="let res_entry of apiNmrResData | keysPipe">
-                <summary-box [entryid] = "entryid" [data]="entry.value" [molecules]="moleculeData | keysPipe" [resources]="res_entry.value"></summary-box>
+                <summary-box [entryid] = "entryId" [data]="entry.value" [molecules]="moleculeData | keysPipe" [resources]="res_entry.value"></summary-box>
             </div>
         </div>
         <div *ngIf="!apiNmrResData">
-            <summary-box [entryid] = "entryid" [data]="entry.value" [molecules]="moleculeData | keysPipe"></summary-box>
+            <summary-box [entryid] = "entryId" [data]="entry.value" [molecules]="moleculeData | keysPipe"></summary-box>
         </div>
     </div>
 </div>
