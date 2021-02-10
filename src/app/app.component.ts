@@ -114,27 +114,6 @@ export class AppComponent implements OnInit {
         this.dataService.getApiData(this.entryId + '.json', this.sasExpApiUrl).then(data => this.sasExperimentalData = data);
     }
 
-
-    changeIcon(val): string {
-        if (val === '8') {
-            return '9';
-        } else if (val === '9') {
-            return '8';
-        } else {
-            return '9';
-        }
-    }
-
-    changeDisplay(val): string {
-        if (val === 8) {
-            return 'block';
-        } else if (val === 9) {
-            return 'none';
-        } else {
-            return 'none';
-        }
-    }
-
     createFormattedExpData(apiData): void {
         for (let i = 0; i < apiData[this.entryId].length; i++) {
             if (apiData[this.entryId][i].experimental_method_class === 'x-ray') {
