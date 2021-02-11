@@ -2,9 +2,12 @@
 
 <dom-module id="em-experimental-info">
     <template>
-        <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/3NAduThrzIQBle3JZIW8k1XLaQTpIgbnzAFnfQRmGnt.css">
-        <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/ICmKGiGC29ZbFU8BSALM68ic92Nkg6CqwggeUJoCpuT.css">
-        <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/0wp1KlqjhTsLUUrs9fIgtMzSzDshnd2fOBJCLIrOvPN.css">
+        <link rel="stylesheet"
+              href="https://www.ebi.ac.uk/pdbe/entry/static/3NAduThrzIQBle3JZIW8k1XLaQTpIgbnzAFnfQRmGnt.css">
+        <link rel="stylesheet"
+              href="https://www.ebi.ac.uk/pdbe/entry/static/ICmKGiGC29ZbFU8BSALM68ic92Nkg6CqwggeUJoCpuT.css">
+        <link rel="stylesheet"
+              href="https://www.ebi.ac.uk/pdbe/entry/static/0wp1KlqjhTsLUUrs9fIgtMzSzDshnd2fOBJCLIrOvPN.css">
         <div class="container_pdbe">
             <div class="grid_12 entry-content-left">
                 <template is="dom-if" if="{{buffer.name}}">
@@ -86,7 +89,7 @@
                                 </span>
                             </div>
                         </template>
-                            <template is="dom-if" if="{{vitrification.details}}">
+                        <template is="dom-if" if="{{vitrification.details}}">
                             <div class="grid_24">
                                 <span class="data-label reset_auto grid_8 alpha">
                                     Details:
@@ -130,106 +133,106 @@
     </template>
 
     <script>
-    Polymer({
+        Polymer({
 
-        is: 'em-experimental-info',
+            is: 'em-experimental-info',
 
-        properties: {
-            data: Object,
-            buffer: {
-                type: Object,
-                computed: "createBuffer(data)"
+            properties: {
+                data: Object,
+                buffer: {
+                    type: Object,
+                    computed: "createBuffer(data)"
+                },
+                vitrification: {
+                    type: Object,
+                    computed: "createVitrification(data)"
+                }
             },
-            vitrification: {
-                type: Object,
-                computed: "createVitrification(data)"
-            }
-        },
 
-        createBuffer: function(data){
-            ph_string = "";
-            name_string = "";
-            details_string = "";
-            if(data.specimen_preparation.buffer){
-                length = data.specimen_preparation.buffer.length;
-                for(i in data.specimen_preparation.buffer){
-                    if(data.specimen_preparation.buffer[i].ph){
-                        ph_string += data.specimen_preparation.buffer[i].ph;
-                        if(length > 1 && i < length - 1){
-                            ph_string += "; "
+            createBuffer: function (data) {
+                ph_string = "";
+                name_string = "";
+                details_string = "";
+                if (data.specimen_preparation.buffer) {
+                    length = data.specimen_preparation.buffer.length;
+                    for (i in data.specimen_preparation.buffer) {
+                        if (data.specimen_preparation.buffer[i].ph) {
+                            ph_string += data.specimen_preparation.buffer[i].ph;
+                            if (length > 1 && i < length - 1) {
+                                ph_string += "; "
+                            }
                         }
-                    }
-                    if(data.specimen_preparation.buffer[i].name){
-                        buffer_string += data.specimen_preparation.buffer[i].name + "; ";
-                        if(length > 1 && i < length - 1){
-                            buffer_string += "; "
+                        if (data.specimen_preparation.buffer[i].name) {
+                            buffer_string += data.specimen_preparation.buffer[i].name + "; ";
+                            if (length > 1 && i < length - 1) {
+                                buffer_string += "; "
+                            }
                         }
-                    }
-                    if(data.specimen_preparation.buffer[i].details){
-                        details_string += data.specimen_preparation.buffer[i].details + "; ";
-                        if(length > 1 && i < length - 1){
-                            details_string += "; "
+                        if (data.specimen_preparation.buffer[i].details) {
+                            details_string += data.specimen_preparation.buffer[i].details + "; ";
+                            if (length > 1 && i < length - 1) {
+                                details_string += "; "
+                            }
                         }
                     }
                 }
-            }
-            return {
-                "ph":ph_string,
-                "name":name_string,
-                "details": details_string
-            }
-        },
+                return {
+                    "ph": ph_string,
+                    "name": name_string,
+                    "details": details_string
+                }
+            },
 
-        createVitrification: function(data){
-            cryogen_string = "";
-            temperature_string = "";
-            instrument_string = "";
-            humidity_string = "";
-            details_string = "";
-            if(data.specimen_preparation.vitrification){
-                length = data.specimen_preparation.vitrification.length;
-                for(i in data.specimen_preparation.vitrification){
-                    if(data.specimen_preparation.vitrification[i].cryogen){
-                        cryogen_string += data.specimen_preparation.vitrification[i].cryogen;
-                        if(length > 1 && i < length - 1){
-                            cryogen_string += "; "
+            createVitrification: function (data) {
+                cryogen_string = "";
+                temperature_string = "";
+                instrument_string = "";
+                humidity_string = "";
+                details_string = "";
+                if (data.specimen_preparation.vitrification) {
+                    length = data.specimen_preparation.vitrification.length;
+                    for (i in data.specimen_preparation.vitrification) {
+                        if (data.specimen_preparation.vitrification[i].cryogen) {
+                            cryogen_string += data.specimen_preparation.vitrification[i].cryogen;
+                            if (length > 1 && i < length - 1) {
+                                cryogen_string += "; "
+                            }
                         }
-                    }
-                    if(data.specimen_preparation.vitrification[i].temperature){
-                        temperature_string += data.specimen_preparation.vitrification[i].temperature;
-                        if(length > 1 && i < length - 1){
-                            temperature_string += "; "
+                        if (data.specimen_preparation.vitrification[i].temperature) {
+                            temperature_string += data.specimen_preparation.vitrification[i].temperature;
+                            if (length > 1 && i < length - 1) {
+                                temperature_string += "; "
+                            }
                         }
-                    }
-                    if(data.specimen_preparation.vitrification[i].instrument){
-                        instrument_string += data.specimen_preparation.vitrification[i].instrument;
-                        if(length > 1 && i < length - 1){
-                            instrument_string += "; "
+                        if (data.specimen_preparation.vitrification[i].instrument) {
+                            instrument_string += data.specimen_preparation.vitrification[i].instrument;
+                            if (length > 1 && i < length - 1) {
+                                instrument_string += "; "
+                            }
                         }
-                    }
-                    if(data.specimen_preparation.vitrification[i].humidity){
-                        humidity_string += data.specimen_preparation.vitrification[i].humidity;
-                        if(length > 1 && i < length - 1){
-                            humidity_string += "; "
+                        if (data.specimen_preparation.vitrification[i].humidity) {
+                            humidity_string += data.specimen_preparation.vitrification[i].humidity;
+                            if (length > 1 && i < length - 1) {
+                                humidity_string += "; "
+                            }
                         }
-                    }
-                    if(data.specimen_preparation.vitrification[i].details){
-                        details_string += data.specimen_preparation.vitrification[i].details;
-                        if(length > 1 && i < length - 1){
-                            details_string += "; "
+                        if (data.specimen_preparation.vitrification[i].details) {
+                            details_string += data.specimen_preparation.vitrification[i].details;
+                            if (length > 1 && i < length - 1) {
+                                details_string += "; "
+                            }
                         }
                     }
                 }
-            }
-            return {
-                "cryo":cryogen_string, 
-                "temp":temperature_string, 
-                "instrument": instrument_string, 
-                "humidity":humidity_string,
-                "details":details_string
-            }
-        },   
+                return {
+                    "cryo": cryogen_string,
+                    "temp": temperature_string,
+                    "instrument": instrument_string,
+                    "humidity": humidity_string,
+                    "details": details_string
+                }
+            },
 
-    });
+        });
     </script>
 </dom-module>

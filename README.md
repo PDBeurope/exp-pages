@@ -10,7 +10,7 @@ The web components are a combination of a root Angular 2 app and embedded Polyme
 
 ## Quick Start
 
-Clone the repository and install dependencies
+Clone the repository and install dependencies.
 ```
 git clone https://github.com/PDBeurope/exp-pages.git
 cd exp-pages

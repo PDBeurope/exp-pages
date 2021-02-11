@@ -2,9 +2,12 @@
 
 <dom-module id="nmr-validation-info">
     <template>
-        <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/3NAduThrzIQBle3JZIW8k1XLaQTpIgbnzAFnfQRmGnt.css">
-        <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/ICmKGiGC29ZbFU8BSALM68ic92Nkg6CqwggeUJoCpuT.css">
-        <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/0wp1KlqjhTsLUUrs9fIgtMzSzDshnd2fOBJCLIrOvPN.css">
+        <link rel="stylesheet"
+              href="https://www.ebi.ac.uk/pdbe/entry/static/3NAduThrzIQBle3JZIW8k1XLaQTpIgbnzAFnfQRmGnt.css">
+        <link rel="stylesheet"
+              href="https://www.ebi.ac.uk/pdbe/entry/static/ICmKGiGC29ZbFU8BSALM68ic92Nkg6CqwggeUJoCpuT.css">
+        <link rel="stylesheet"
+              href="https://www.ebi.ac.uk/pdbe/entry/static/0wp1KlqjhTsLUUrs9fIgtMzSzDshnd2fOBJCLIrOvPN.css">
         <div class="container_pdbe">
             <div class="grid_24 pdbe-structure-validation">
                 <span class="grid_24">&nbsp;</span>
@@ -32,7 +35,8 @@
                                 <span class="data-label grid_8 reset_100">Number of deposited models:</span>
                                 <span class="structure-analysis-architecture grid_16 reset_100"> 
                                 {{data.nmr_ensemble_refinement.number_of_deposited_models}}
-                                    <template is="dom-if" if="{{data.nmr_ensemble_refinement.conformer_selection_criteria}}">
+                                    <template is="dom-if"
+                                              if="{{data.nmr_ensemble_refinement.conformer_selection_criteria}}">
                                         ({{data.nmr_ensemble_refinement.conformer_selection_criteria}})
                                     </template>
                                 </span>
@@ -43,7 +47,8 @@
                             <div class="grid_24 pdbe-domain-validation pdbe-fact">
                                 <span class="data-label grid_8 reset_100">Well-defined residues:</span>
                                 <span class="structure-analysis-architecture grid_16 reset_100">
-                                    <template is="dom-repeat" items="{{data.nmr_ensemble_refinement.well_defined_core}}">
+                                    <template is="dom-repeat"
+                                              items="{{data.nmr_ensemble_refinement.well_defined_core}}">
                                         {{item}}
                                     </template>
                                 </span>
@@ -55,7 +60,7 @@
                                 <span class="data-label grid_8 reset_100">Backbone RMSD for the largest domain:</span>
                                 <span class="grid_16 reset_100">
                                     {{data.nmr_ensemble_refinement.backbone_rmsd_for_largest_domain}} &Aring;
-                                </span>         
+                                </span>
                             </div>
                         </template>
 
@@ -64,7 +69,7 @@
                                 <span class="data-label grid_8 reset_100">Representative model:</span>
                                 <span class="grid_16 reset_100">
                                 {{data.nmr_ensemble_refinement.medoid_representative_model}} (medoid: most similar to other models)
-                                </span>         
+                                </span>
                             </div>
                         </template>
 
@@ -73,17 +78,19 @@
                                 <span class="data-label grid_8 reset_100">Representative model:</span>
                                 <span class="grid_16 reset_100">
                                     {{data.nmr_ensemble_refinement.author_defined_representative_model}}
-                                    <template is="dom-if" if="{{data.nmr_ensemble_refinement.representative_model_selection_criteria}}">
+                                    <template is="dom-if"
+                                              if="{{data.nmr_ensemble_refinement.representative_model_selection_criteria}}">
                                         ({{data.nmr_ensemble_refinement.representative_model_selection_criteria}})
                                     </template>
 
-                                    <template is="dom-if" if="{{!data.nmr_ensemble_refinement.representative_model_selection_criteria}}">
+                                    <template is="dom-if"
+                                              if="{{!data.nmr_ensemble_refinement.representative_model_selection_criteria}}">
                                         (author defined)
                                     </template>
-                                </span>         
+                                </span>
                             </div>
                         </template>
-                        
+
                     </div>
                 </template>
             </div>
@@ -118,24 +125,24 @@
     </template>
 
     <script>
-    Polymer({
+        Polymer({
 
-        is: 'nmr-validation-info',
+            is: 'nmr-validation-info',
 
-        properties: {
-            data: Object,
-            resources: Object
-        },
-        
-        checkLength: function(array){
-            if(array.length > 0){
-                return true;
-            } else {
-                return false;
+            properties: {
+                data: Object,
+                resources: Object
+            },
+
+            checkLength: function (array) {
+                if (array.length > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
-        }
 
-    });
+        });
     </script>
 </dom-module>
 

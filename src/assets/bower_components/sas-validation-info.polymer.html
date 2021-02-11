@@ -2,24 +2,28 @@
 
 <dom-module id="sas-validation-info">
     <template>
-        <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/3NAduThrzIQBle3JZIW8k1XLaQTpIgbnzAFnfQRmGnt.css">
-        <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/ICmKGiGC29ZbFU8BSALM68ic92Nkg6CqwggeUJoCpuT.css">
-        <link rel="stylesheet" href="https://www.ebi.ac.uk/pdbe/entry/static/0wp1KlqjhTsLUUrs9fIgtMzSzDshnd2fOBJCLIrOvPN.css">
+        <link rel="stylesheet"
+              href="https://www.ebi.ac.uk/pdbe/entry/static/3NAduThrzIQBle3JZIW8k1XLaQTpIgbnzAFnfQRmGnt.css">
+        <link rel="stylesheet"
+              href="https://www.ebi.ac.uk/pdbe/entry/static/ICmKGiGC29ZbFU8BSALM68ic92Nkg6CqwggeUJoCpuT.css">
+        <link rel="stylesheet"
+              href="https://www.ebi.ac.uk/pdbe/entry/static/0wp1KlqjhTsLUUrs9fIgtMzSzDshnd2fOBJCLIrOvPN.css">
         <div class="container_pdbe">
             <div class="grid_24 tab-content">
                 <template is="dom-if" if="{{checkLength(data)}}">
                     <template is="dom-repeat" items="{{data}}">
                         <template is="dom-if" if="{{checkDisplay(index)}}">
-                            Displaying validation data from <a href="https://www.sasbdb.org/data/{{item.code}}/" target="_tab">{{item.code}}</a>:
+                            Displaying validation data from <a href="https://www.sasbdb.org/data/{{item.code}}/"
+                                                               target="_tab">{{item.code}}</a>:
                             <div>
                                 <table>
                                     <tr>
-                                    <th>Metric</th>
-                                    <th>Description</th>
+                                        <th>Metric</th>
+                                        <th>Description</th>
                                     </tr>
                                     <template is="dom-if" if="{{item.experimental_mw}}">
                                         <tr>
-                                        <td>Expected molecular weight </td>
+                                            <td>Expected molecular weight</td>
                                             <td>
                                                 {{formatNumber(item.experimental_mw,2)}} kDa
                                             </td>
@@ -28,7 +32,7 @@
 
                                     <template is="dom-if" if="{{item.guinier_i0_mw}}">
                                         <tr>
-                                            <td>Observed molecular weight ( Guinier I<sub>zero</sub> ) </td>
+                                            <td>Observed molecular weight ( Guinier I<sub>zero</sub> )</td>
                                             <td>
                                                 {{formatNumber(item.guinier_i0_mw,2)}} kDa
                                                 <template is="dom-if" if="{{item.guinier_i0_mw_error}}">
@@ -40,7 +44,7 @@
 
                                     <template is="dom-if" if="{{item.porod_mw}}">
                                         <tr>
-                                            <td>Observed molecular weight (Porod) </td>
+                                            <td>Observed molecular weight (Porod)</td>
                                             <td>
                                                 {{formatNumber(item.porod_mw,2)}} kDa
                                                 <template is="dom-if" if="{{item.porod_mw_error}}">
@@ -53,7 +57,7 @@
                                     <template is="dom-if" if="{{item.experiment.sample.molecule}}">
                                         <template is="dom-repeat" items="{{item.experiment.sample.molecule}}">
                                             <tr>
-                                                <td>Oligomerization state (of {{item.long_name}}) </td>
+                                                <td>Oligomerization state (of {{item.long_name}})</td>
                                                 <template is="dom-if" if="{{item.oligomerization}}">
                                                     <td>{{item.oligomerization}}</td>
                                                 </template>
@@ -66,11 +70,12 @@
 
                                     <template is="dom-if" if="{{item.estimated_volume}}">
                                         <tr>
-                                            <td>Estimated volume </td>
+                                            <td>Estimated volume</td>
                                             <td>
                                                 {{formatNumber(item.estimated_volume,2)}} nm<sup>3</sup>
                                                 <template is="dom-if" if="{{item.estimated_volume_error}}">
-                                                    <span>+- {{formatNumber(item.estimated_volume_error,2)}}</span> nm<sup>3</sup>
+                                                    <span>+- {{formatNumber(item.estimated_volume_error,2)}}</span>
+                                                    nm<sup>3</sup>
                                                 </template>
                                             </td>
                                         </tr>
@@ -78,11 +83,12 @@
 
                                     <template is="dom-if" if="{{item.porod_volume}}">
                                         <tr *ngIf="entry.porod_volume">
-                                            <td>Porod volume </td>
+                                            <td>Porod volume</td>
                                             <td>
                                                 {{formatNumber(item.porod_volume,2)}} nm<sup>3</sup>
                                                 <template is="dom-if" if="{{item.porod_volume_error}}">
-                                                    <span>+- {{formatNumber(item.porod_volume_error,2)}}</span> nm<sup>3</sup>
+                                                    <span>+- {{formatNumber(item.porod_volume_error,2)}}</span>
+                                                    nm<sup>3</sup>
                                                 </template>
                                             </td>
                                         </tr>
@@ -90,7 +96,7 @@
 
                                     <template is="dom-if" if="{{item.guinier_rg}}">
                                         <tr>
-                                            <td>R<sub>g</sub> from Guinier fit </td>
+                                            <td>R<sub>g</sub> from Guinier fit</td>
                                             <td>
                                                 {{formatNumber(item.guinier_rg,2)}} nm
                                                 <template is="dom-if" if="{{item.guinier_rg_error}}">
@@ -114,7 +120,7 @@
 
                                     <template is="dom-if" if="{{item.guinier_i0}}">
                                         <tr>
-                                            <td>I<sub>(0)</sub> from Guinier fit </td>
+                                            <td>I<sub>(0)</sub> from Guinier fit</td>
                                             <td>
                                                 {{formatNumber(item.guinier_i0,2)}}
                                                 <template is="dom-if" if="{{item.guinier_i0_error}}">
@@ -126,7 +132,7 @@
 
                                     <template is="dom-if" if="{{item.pddf_i0}}">
                                         <tr>
-                                            <td>I<sub>zero</sub> from Porod </td>
+                                            <td>I<sub>zero</sub> from Porod</td>
                                             <td>
                                                 {{formatNumber(item.pddf_i0,2)}}
                                                 <template is="dom-if" if="{{item.pddf_i0_error}}">
@@ -136,16 +142,17 @@
                                         </tr>
                                     </template>
                                 </table>
-                                </div>
+                            </div>
                         </template>
                     </template>
                 </template>
-            </div>  
+            </div>
             <template is="dom-if" if="{{checkLength(data)}}">
                 <div class="grid_24">
-                    All related SAS depositions: 
+                    All related SAS depositions:
                     <template is="dom-repeat" items="{{data}}">
-                        <span><a href="https://www.sasbdb.org/data/{{item.code}}/" target="_tab">{{item.code}}</a></span>
+                        <span><a href="https://www.sasbdb.org/data/{{item.code}}/"
+                                 target="_tab">{{item.code}}</a></span>
                     </template>
                 </div>
             </template>
@@ -157,39 +164,39 @@
     </template>
 
     <script>
-    Polymer({
+        Polymer({
 
-        is: 'sas-validation-info',
+            is: 'sas-validation-info',
 
-        properties: {
-            data: Object,
-            panelNum: Number
-        },
+            properties: {
+                data: Object,
+                panelNum: Number
+            },
 
-        formatNumber: function(value, dec){
+            formatNumber: function (value, dec) {
                 num = Math.pow(10, dec);
-                return Math.floor(value * num)/num;
-        },
+                return Math.floor(value * num) / num;
+            },
 
-        checkDisplay: function(index){
-            if(!this.panelNum){
-                this.panelNum = 0;
-            }
-            if(index == this.panelNum){
-                return true;
-            } else {
-                return false;
-            }
-        },
+            checkDisplay: function (index) {
+                if (!this.panelNum) {
+                    this.panelNum = 0;
+                }
+                if (index == this.panelNum) {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
 
-        checkLength: function(array){
-            if(array.length > 0){
-                return true;
-            } else {
-                return false;
+            checkLength: function (array) {
+                if (array.length > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
-        }
 
-    });
+        });
     </script>
 </dom-module>
