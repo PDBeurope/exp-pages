@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
     expDisplay: string;
 
     constructor(private dataService: PdbService, elm: ElementRef) {
-        this.baseUrl = 'https://www.ebi.ac.uk'
+        this.baseUrl = 'https://www.ebi.ac.uk';
         this.sasBaseUrl = 'https://www.sasbdb.org/rest-api/entry/';
         this.sasValApiUrl = this.sasBaseUrl + 'validation/';
         this.sasExpApiUrl = this.sasBaseUrl + 'experiment/';
