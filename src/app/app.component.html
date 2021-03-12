@@ -69,8 +69,6 @@
                                 No validation information available
                             </div>
                         </div>
-                        <!-- TODO -->
-                        <!-- "OTHER" NEEDS TO CHANGE TO "SAS" -->
                         <div *ngIf="currentExpType == 'sas' && experiment.experimental_method_class == 'sas'">
                             <div *ngIf="sasValidationData">
                                 <sas-validation-info [data]="sasValidationData"></sas-validation-info>
@@ -112,9 +110,6 @@
                         <div *ngIf="currentExpType == 'em' && experiment.experimental_method_class == 'em'">
                             <em-experimental-info [data]="experiment"></em-experimental-info>
                         </div>
-                        <!-- TODO -->
-                        <!-- THIS IS NOT FINAL -->
-                        <!-- "OTHER" NEEDS TO CHANGE TO "SAS" -->
                         <div *ngIf="currentExpType == 'sas' && experiment.experimental_method_class == 'sas'">
                             <div *ngIf="sasExperimentalData">
                                 <sas-experimental-info [data]="sasExperimentalData"></sas-experimental-info>
